@@ -21,10 +21,11 @@
 
     main {
         padding-top: 40px;
+        min-height: calc(100vh - 250px);
     }
 
     .btn-cart {
-        
+
     }
 
     .products {
@@ -38,4 +39,13 @@
 
         .product-item p {
             margin-bottom: 20px;
+        }
+
+
+
+
+
+        footer {
+            background-color: #ffe4c4;
+            height: 100px;
         }
