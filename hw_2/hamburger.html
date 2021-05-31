@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0 auto;
+        }
+
+        header {
+            height: 100px;
+            background: #222222;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+        }
+
+        main {
+            padding-top: 100px;
+        }
+
+        h2, H2 {
+            display: block;
+        }
+        
+        .menu {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            max-width: 800px;
+            max-height: 800px;
+            border: solid 2px #222222;
+            background: bisque;
+            padding: 80px 20px;
+        }
+
+        .burgers, .toppings {
+            min-width: 600px;
+            min-height: 200px;
+            display: flex;
+        }
+
+        .burgers {
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h2>Какой-то там бургер</h2>
+    </header>
+    
+    <!-- <button class="burgerSmall">Маленький бургер</button>
+    <button class="burgerLarge">Большой бургер</button>
+    <button class="topping">С сыром</button>
+    <button class="topping">С салатом</button>
+    <button class="topping">С картофелем</button> -->
+
+    <main>
+        <div class="menu">
+            <div class="burgers">
+
+
+            </div>
+            <div class="toppings">
+                
+                
+            </div>
+            <h4 class="total">
+                0
+            </h4>
+        </div>
+    </main>
+
+    <script>
+        'use strict'
+                
+        // let arr = [];
+        // let burgerSmall = document.querySelector('.burgerSmall');
+        // let burgerLarge = document.querySelector('.burgerLarge');
+        let total = document.querySelector('.total');
+        // let topping = document.querySelectorAll('.topping');
+        let test3 = 0;
+        
+        class FoodList {
+            constructor(title, price, calories) {
+                this.title = title;
+                this.price = price;
+                this.calories = calories;
+            }
+            render() {
+                return `<div class="food">
+                    <h3 class="title">${this.title}</h3>
+                    <p class="price">${this.price}</p>
+                    <p class="calories">${this.calories}</p>
+                    <button class="btn_add">Добавить</button>
+                </div>`;
+            }
+        }
+
+        class ToCart {
+            constructor(title, price, calories) {
+                this.title = title;
+                this.price = price;
+                this.calories = calories;
+            }
+            test2(){
+                test3 += this.price;
+                console.log(this.price);
+                }
+        }
+
+        class Ingredients {
+            constructor(product) {
+            this.product = [];
+            }
+            productCard() {
+                this.product = [
+                    {id: 3, title: "С сыром", price: 10, calories: 20},
+                    {id: 4, title: "С салатом", price: 20, calories: 5},
+                    {id: 5, title: "С картофелем", price: 15, calories: 10},
+                ];
+            }
+            
+            render(htmlPush) {
+                let topping = '';
+                this.product.forEach(elem => {
+                    const toppingItem = new FoodList(elem.title, elem.price, elem.calories);
+                    topping += toppingItem.render();
+                });
+                document.querySelector(htmlPush).insertAdjacentHTML("afterbegin", topping);
+            }
+
+            btnListener() {
+                let btn_add = document.querySelectorAll('.btn_add');
+                btn_add.forEach(elem => {
+                    elem.addEventListener('click', function() {
+                    let sumElem = event.target.parentNode;
+                    console.log(sumElem.children);
+                    let test = new ToCart(sumElem.children);
+                    test.test2();
+                    // let sumElem = event.target.parentNode;
+                    // //this.topping.children[1].innerHTML;
+                    // total.innerHTML += sumElem;
+                    // console.log(sumElem);
+                    })
+                })
+            }
+            
+            addTopping(topping) {
+                this.price += this.price + topping.price;
+                this.calories += this.calories + topping.calories;
+            }
+            
+        }
+
+        class Humburger extends Ingredients{
+            // constructor(product) {
+            //     this.product = [];
+            // }
+            productCard() {
+                this.product = [
+                    {id: 1, title: "Маленький", price: 50, calories: 20},
+                    {id: 2, title: "Большой", price: 100, calories: 40},
+                ]
+            }
+
+
+        }
+
+        let topping = new Ingredients();
+        topping.productCard();
+        topping.render(".toppings");
+        topping.btnListener();
+
+        let test = new Humburger();
+        test.productCard();
+        test.render(".burgers");
+        test.btnListener();
+
+
+    </script>
+</body>
+</html>

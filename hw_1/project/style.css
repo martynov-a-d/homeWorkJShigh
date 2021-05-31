@@ -14,10 +14,15 @@
 
     header {
         display: flex;
+        align-content: center;
         background: #000000;
         color: #ffffff;
         padding: 40px;
     }
+
+        .top_title {
+
+        }
 
     main {
         padding-top: 40px;
