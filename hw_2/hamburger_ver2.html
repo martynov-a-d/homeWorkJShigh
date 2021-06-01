@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
     <style>
         * {
             margin: 0 auto;
@@ -29,6 +27,11 @@
             display: block;
         }
 
+        h3,
+        H3 {
+            
+        }
+
         .menu {
             display: flex;
             flex-direction: column;
@@ -46,52 +49,83 @@
         }
 
         .burgers,
-        .toppings {
+        .toppings,
+        .souce {
             min-width: 400px;
             min-height: 100px;
             display: flex;
             align-items: center;
         }
 
+            .souce {
+                
+            }
+
+        .result {
+
+        }
+
         .burgers {
             margin-bottom: 40px;
         }
+
+        .btn_add-cart {
+            margin-top: 40px;
+        }
     </style>
 </head>
-
 <body>
-
     <header>
         <h2>Какой-то там бургер</h2>
     </header>
     <main>
         <div class="menu text">
-            <div class="burgers">
-                <input type="radio" name="burgers" value="burgerSmall" checked class="burgerSmall">Маленький бургер<br>
-                <input type="radio" name="burgers" value="burgerLarge" class="burgerLarge">Большой бургер<br>
+            <div>
+                <h3>Выберите размер бургера, подходящий именно вам!</h3>
+                <div class="burgers">
+                    <input type="radio" name="burgers" value="burgerSmall" class="burgerSmall" data-price="50" data-calories="20">Маленький бургер<br>
+                    <input type="radio" name="burgers" value="burgerLarge" class="burgerLarge" data-price="100" data-calories="40">Большой бургер<br>
+                </div>
             </div>
-            <div class="toppings">
-                <input type="radio" name="toppings" value="chesse" checked class="topping">С сыром<br>
-                <input type="radio" name="toppings" value="salad" class="topping">С салатом<br>
-                <input type="radio" name="toppings" value="potato" class="topping">С картофелем<br>
+            <div>
+                <h3>Сделайте свой уникальный бургер, с чем он будет?</h3>
+                <div class="toppings">
+                    <input type="radio" name="toppings" value="chesse" class="topping" data-price="10" data-calories="20">С сыром<br>
+                    <input type="radio" name="toppings" value="salad" class="topping" data-price="20" data-calories="5">С салатом<br>
+                    <input type="radio" name="toppings" value="potato" class="topping" data-price="15" data-calories="10">С картофелем<br>
+                </div>
             </div>
-            <div class="souce">
-                <input type="checkbox" name="souce" value="paprica" class="topping"> посыпать приправой<br>
-                <input type="checkbox" name="souce" value="mayonnaise" class="topping"> полить майонезом<br>
+            <div>
+                <h3>Как на счет дополнительного соуса или специй?</h3>
+                <div  class="souce">
+                    <input type="checkbox" name="souce" value="paprica" class="topping" data-price="15" data-calories="0"> посыпать приправой<br>
+                    <input type="checkbox" name="souce" value="mayonnaise" class="topping" data-price="20" data-calories="5"> полить майонезом<br>
+                </div>
+            </div>
+            <div>
+                <p class="result text">Итоговая стоимость: <span class="price">0</span><br>Кол-во калорий: <span class="calories">0</span></p>
+                <button class="cook">Приготовить</button>
             </div>
         </div>
-        <button class="btn_add-cart">Добавить в корзину</button>
     </main>
-
-
-
     <script>
         'use strict'
+        const btnCook = document.querySelector('.cook');
+        const price = document.querySelector('.price');
+        const calories = document.querySelector('.calories');
+        // btnCook.addEventListener('click',);
+        let totalPrice = 0;
+        let totalCalories = 0;
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(elem => elem.addEventListener('change', (event) => {
+            totalPrice += +(elem.getAttribute("data-price"));
+            totalCalories += +(elem.getAttribute("data-calories"));
+            price.innerHTML = totalPrice;
+            calories.innerHTML = totalCalories;
+    }));
+    
 
-        const btn_cart = document.querySelector('.btn_add-cart');
-
-        btn_cart.addEventListener('click',);
-
+        
     </script>
 </body>
 
