@@ -110,28 +110,30 @@
     </main>
     <script>
         'use strict'
-        
+        let createBurger = {};
+        let createTopping = {};
+        let createSouce = {};
         // Get all need data
         document.querySelector('.cook').addEventListener('click', () => {
             // Create Burger
             let selectBurger = document.querySelector('input:checked');
             // console.log(selectBurger.getAttribute('value'), selectBurger.getAttribute('data-price'), selectBurger.getAttribute('data-calories'));
-            let createBurger = new Burger(selectBurger.getAttribute('value'), +selectBurger.getAttribute('data-price'), +selectBurger.getAttribute('data-calories'));
+            createBurger = new Burger(selectBurger.getAttribute('value'), +selectBurger.getAttribute('data-price'), +selectBurger.getAttribute('data-calories'));
             console.log(createBurger);
             // Create Topping
             let selectTopping = document.querySelector('input[name="toppings"]:checked');
             // console.log(selectTopping.getAttribute('value'), selectTopping.getAttribute('data-price'), selectTopping.getAttribute('data-calories'));
-            let createTopping = new Food(selectTopping.getAttribute('value'), +selectTopping.getAttribute('data-price'), +selectTopping.getAttribute('data-calories'));
+            createTopping = new Food(selectTopping.getAttribute('value'), +selectTopping.getAttribute('data-price'), +selectTopping.getAttribute('data-calories'));
             console.log(createTopping);
             // Create Souce
             let selectSouce = document.querySelectorAll('input[name="souce"]:checked');
             // console.log(selectSouce.getAttribute('value'), selectSouce.getAttribute('data-price'), selectSouce.getAttribute('data-calories'));
             selectSouce.forEach(elem => {
-                let createSouce = new Food(elem.getAttribute('value'), +elem.getAttribute('data-price'), +elem.getAttribute('data-calories'));
+                createSouce = new Food(elem.getAttribute('value'), +elem.getAttribute('data-price'), +elem.getAttribute('data-calories'));
                 console.log(createSouce);
                 });
+            Burger.prototype.sumTotal();
             });
-
         // Make Class Food
         class Food{
             constructor(title, price, calories) {
@@ -141,14 +143,21 @@
             }
             
         }
-
         // Make Class Burger
         class Burger extends Food{
-            
+            sumTotal() {
+                // Checking for NaN
+                let souceSum = createSouce.price;
+                let souseCal = createSouce.calories;
+                // if NaN let value = 0
+                if (isNaN(createSouce.price)) {
+                    souceSum = 0;
+                    souseCal = 0;
+                };
+                document.querySelector('.price').innerHTML = createBurger.price + createTopping.price + souceSum;
+                document.querySelector('.calories').innerHTML = createBurger.calories + createTopping.calories + souseCal;
+            }
         }
-        
-
-        
     </script>
 </body>
 
