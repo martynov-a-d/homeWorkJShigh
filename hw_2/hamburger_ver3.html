@@ -12,24 +12,33 @@
 
         header {
             height: 100px;
-            background: #222222;
-            color: #FFFFFF;
+            background: #e6e6e6;
+            color: #635087;
             display: flex;
             align-items: center;
         }
 
         main {
             padding-top: 100px;
+            background: #f7f7f7;
+            min-height: calc(100vh - 300px);
         }
 
         h2,
         H2 {
-            display: block;
+            font-family: georgia;
+            color: #635087;
+            font-weight: 300;
+            font-size: 20px;
+            line-height: 23px;
         }
 
         h3,
         H3 {
-            
+            font-family: georgia;
+            color: #635087;
+            font-size: 20px;
+            font-weight: 700;
         }
 
         .menu {
@@ -39,13 +48,16 @@
             max-width: 800px;
             max-height: 800px;
             border: solid 2px #222222;
-            background: bisque;
+            background: #ffffff;
             padding: 80px 20px;
         }
 
         .text {
+            font-family: Georgia;
+            font-weight: 300;
             font-size: 20px;
-            font-family: Georgia, 'Times New Roman', Times, serif;
+            line-height: 23px;
+            color: #222222;
         }
 
         .burgers,
@@ -69,8 +81,17 @@
             margin-bottom: 40px;
         }
 
-        .btn_add-cart {
-            margin-top: 40px;
+        .total {
+            text-align: center;
+        }
+
+            .btn_add-cart {
+                margin-top: 40px;
+            }
+
+        footer {
+            background: #e6e6e6;
+            height: 100px;
         }
     </style>
 </head>
@@ -102,12 +123,15 @@
                     <input type="checkbox" name="souce" value="mayonnaise" class="topping" data-price="20" data-calories="5"> полить майонезом<br>
                 </div>
             </div>
-            <div>
+            <div class="total">
                 <p class="result text">Итоговая стоимость: <span class="price">0</span><br>Кол-во калорий: <span class="calories">0</span></p>
                 <button class="cook">Собрать</button>
             </div>
         </div>
     </main>
+    <footer>
+
+    </footer>
     <script>
         'use strict'
         let createBurger = {};
