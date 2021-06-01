@@ -110,23 +110,38 @@
     </main>
     <script>
         'use strict'
-
         
-        
+        // Get all need data
         document.querySelector('.cook').addEventListener('click', () => {
-            let test = document.querySelector('input:checked');
-            console.log(test.getAttribute('value'), test.getAttribute('data-price'), test.getAttribute('data-calories'));
-            // let test = new Burger(burgers, toppings, souce);
-            let test2 = new Burger(test.getAttribute('value'), +test.getAttribute('data-price'), +test.getAttribute('data-calories'));
-            console.log(test2);
+            // Create Burger
+            let selectBurger = document.querySelector('input:checked');
+            console.log(selectBurger.getAttribute('value'), selectBurger.getAttribute('data-price'), selectBurger.getAttribute('data-calories'));
+            let createBurger = new Burger(selectBurger.getAttribute('value'), +selectBurger.getAttribute('data-price'), +selectBurger.getAttribute('data-calories'));
+            console.log(createBurger);
+            // Create Topping
+            let selectTopping = document.querySelector('input[name="toppings"]:checked');
+            console.log(selectTopping.getAttribute('value'), selectTopping.getAttribute('data-price'), selectTopping.getAttribute('data-calories'));
+            let createTopping = new Food(selectTopping.getAttribute('value'), +selectTopping.getAttribute('data-price'), +selectTopping.getAttribute('data-calories'));
+            console.log(createTopping);
+            // Create Souce
+            let selectSouce = document.querySelector('input[name="souce"]:checked');
+            console.log(selectSouce.getAttribute('value'), selectSouce.getAttribute('data-price'), selectSouce.getAttribute('data-calories'));
+            let createSouce = new Food(selectSouce.getAttribute('value'), +selectSouce.getAttribute('data-price'), +selectSouce.getAttribute('data-calories'));
+            console.log(createSouce);
         });
 
-        class Burger{
+        // Make Class Food
+        class Food{
             constructor(size, price, calories) {
                 this.size = size;
                 this.price = price;
                 this.calories = calories;
             }
+            
+        }
+
+        // Make Class Burger
+        class Burger extends Food{
             
         }
         
