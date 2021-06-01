@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0 auto;
+        }
+
+        header {
+            height: 100px;
+            background: #222222;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+        }
+
+        main {
+            padding-top: 100px;
+        }
+
+        h2,
+        H2 {
+            display: block;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            max-width: 800px;
+            max-height: 800px;
+            border: solid 2px #222222;
+            background: bisque;
+            padding: 80px 20px;
+        }
+
+        .text {
+            font-size: 20px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .burgers,
+        .toppings {
+            min-width: 400px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+        }
+
+        .burgers {
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h2>Какой-то там бургер</h2>
+    </header>
+    <main>
+        <div class="menu text">
+            <div class="burgers">
+                <input type="radio" name="burgers" value="burgerSmall" checked class="burgerSmall">Маленький бургер<br>
+                <input type="radio" name="burgers" value="burgerLarge" class="burgerLarge">Большой бургер<br>
+            </div>
+            <div class="toppings">
+                <input type="radio" name="toppings" value="chesse" checked class="topping">С сыром<br>
+                <input type="radio" name="toppings" value="salad" class="topping">С салатом<br>
+                <input type="radio" name="toppings" value="potato" class="topping">С картофелем<br>
+            </div>
+            <div class="souce">
+                <input type="checkbox" name="souce" value="paprica" class="topping"> посыпать приправой<br>
+                <input type="checkbox" name="souce" value="mayonnaise" class="topping"> полить майонезом<br>
+            </div>
+        </div>
+        <button class="btn_add-cart">Добавить в корзину</button>
+    </main>
+
+
+
+    <script>
+        'use strict'
+
+        const btn_cart = document.querySelector('.btn_add-cart');
+
+        btn_cart.addEventListener('click',);
+
+    </script>
+</body>
+
+</html>
