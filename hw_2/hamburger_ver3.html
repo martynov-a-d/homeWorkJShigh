@@ -104,25 +104,32 @@
             </div>
             <div>
                 <p class="result text">Итоговая стоимость: <span class="price">0</span><br>Кол-во калорий: <span class="calories">0</span></p>
-                <button class="cook">Приготовить</button>
+                <button class="cook">Собрать</button>
             </div>
         </div>
     </main>
     <script>
         'use strict'
-        const btnCook = document.querySelector('.cook');
-        const price = document.querySelector('.price');
-        const calories = document.querySelector('.calories');
-        let totalPrice = 0;
-        let totalCalories = 0;
-        const inputs = document.querySelectorAll('input');
-        inputs.forEach(elem => elem.addEventListener('focus', (event) => {
-            totalPrice += +(elem.getAttribute("data-price"));
-            totalCalories += +(elem.getAttribute("data-calories"));
-            price.innerHTML = totalPrice;
-            calories.innerHTML = totalCalories;
-    }));
-    
+
+        
+        
+        document.querySelector('.cook').addEventListener('click', () => {
+            let test = document.querySelector('input:checked');
+            console.log(test.getAttribute('value'), test.getAttribute('data-price'), test.getAttribute('data-calories'));
+            // let test = new Burger(burgers, toppings, souce);
+            let test2 = new Burger(test.getAttribute('value'), +test.getAttribute('data-price'), +test.getAttribute('data-calories'));
+            console.log(test2);
+        });
+
+        class Burger{
+            constructor(size, price, calories) {
+                this.size = size;
+                this.price = price;
+                this.calories = calories;
+            }
+            
+        }
+        
 
         
     </script>
