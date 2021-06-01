@@ -115,20 +115,22 @@
         document.querySelector('.cook').addEventListener('click', () => {
             // Create Burger
             let selectBurger = document.querySelector('input:checked');
-            console.log(selectBurger.getAttribute('value'), selectBurger.getAttribute('data-price'), selectBurger.getAttribute('data-calories'));
+            // console.log(selectBurger.getAttribute('value'), selectBurger.getAttribute('data-price'), selectBurger.getAttribute('data-calories'));
             let createBurger = new Burger(selectBurger.getAttribute('value'), +selectBurger.getAttribute('data-price'), +selectBurger.getAttribute('data-calories'));
             console.log(createBurger);
             // Create Topping
             let selectTopping = document.querySelector('input[name="toppings"]:checked');
-            console.log(selectTopping.getAttribute('value'), selectTopping.getAttribute('data-price'), selectTopping.getAttribute('data-calories'));
+            // console.log(selectTopping.getAttribute('value'), selectTopping.getAttribute('data-price'), selectTopping.getAttribute('data-calories'));
             let createTopping = new Food(selectTopping.getAttribute('value'), +selectTopping.getAttribute('data-price'), +selectTopping.getAttribute('data-calories'));
             console.log(createTopping);
             // Create Souce
-            let selectSouce = document.querySelector('input[name="souce"]:checked');
-            console.log(selectSouce.getAttribute('value'), selectSouce.getAttribute('data-price'), selectSouce.getAttribute('data-calories'));
-            let createSouce = new Food(selectSouce.getAttribute('value'), +selectSouce.getAttribute('data-price'), +selectSouce.getAttribute('data-calories'));
-            console.log(createSouce);
-        });
+            let selectSouce = document.querySelectorAll('input[name="souce"]:checked');
+            // console.log(selectSouce.getAttribute('value'), selectSouce.getAttribute('data-price'), selectSouce.getAttribute('data-calories'));
+            selectSouce.forEach(elem => {
+                let createSouce = new Food(elem.getAttribute('value'), +elem.getAttribute('data-price'), +elem.getAttribute('data-calories'));
+                console.log(createSouce);
+                });
+            });
 
         // Make Class Food
         class Food{
