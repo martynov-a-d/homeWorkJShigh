@@ -83,14 +83,14 @@
             <div>
                 <h3>Выберите размер бургера, подходящий именно вам!</h3>
                 <div class="burgers">
-                    <input type="radio" name="burgers" value="burgerSmall" class="burgerSmall" data-price="50" data-calories="20">Маленький бургер<br>
+                    <input type="radio" name="burgers" value="burgerSmall" class="burgerSmall" checked data-price="50" data-calories="20">Маленький бургер<br>
                     <input type="radio" name="burgers" value="burgerLarge" class="burgerLarge" data-price="100" data-calories="40">Большой бургер<br>
                 </div>
             </div>
             <div>
                 <h3>Сделайте свой уникальный бургер, с чем он будет?</h3>
                 <div class="toppings">
-                    <input type="radio" name="toppings" value="chesse" class="topping" data-price="10" data-calories="20">С сыром<br>
+                    <input type="radio" name="toppings" value="chesse" class="topping" checked data-price="10" data-calories="20">С сыром<br>
                     <input type="radio" name="toppings" value="salad" class="topping" data-price="20" data-calories="5">С салатом<br>
                     <input type="radio" name="toppings" value="potato" class="topping" data-price="15" data-calories="10">С картофелем<br>
                 </div>
@@ -112,7 +112,7 @@
         'use strict'
         let createBurger = {};
         let createTopping = {};
-        let createSouce = {};
+        let createSouce = [];
         // Get all need data
         document.querySelector('.cook').addEventListener('click', () => {
             // Create Burger
@@ -141,12 +141,12 @@
                 this.price = price;
                 this.calories = calories;
             }
-            
         }
         // Make Class Burger
         class Burger extends Food{
             sumTotal() {
                 // Checking for NaN
+                console.log(createSouce);
                 let souceSum = createSouce.price;
                 let souseCal = createSouce.calories;
                 // if NaN let value = 0
