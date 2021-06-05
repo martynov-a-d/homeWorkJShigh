@@ -1,48 +1,110 @@
+'use strict'
 const main = document.querySelector('main');
     main.classList.add("conteiner");
-
 const header = document.querySelector('header');
-
 const btn__cart = document.querySelector('.btn-cart');
-    
 
-const products = [
-    {id: 1, title: 'Notebook', price: 20000},
-    {id: 2, title: 'Mouse', price: 1500},
-    {id: 3, title: 'Keyboard', price: 5000},
-    {id: 4, title: 'Gamepad', price: 4500},
-];
+// ES5
 
-const renderProduct = (title, price) => {
-    return `<div class="product-item">
-                <h3>${title}</h3>
-                <p>${price}</p>
-                <button class="by-btn">Добавить в корзину</button>
-              </div>`;
-};
+// const products = [
+//     {id: 1, title: 'Notebook', price: 20000},
+//     {id: 2, title: 'Mouse', price: 1500},
+//     {id: 3, title: 'Keyboard', price: 5000},
+//     {id: 4, title: 'Gamepad', price: 4500},
+// ];
+// const renderProduct = (title, price) => {
+//     return `<div class="product-item">
+//                 <h3>${title}</h3>
+//                 <p>${price}</p>
+//                 <button class="by-btn">Добавить в корзину</button>
+//               </div>`;
+// };
+// const renderProducts = (list = []) => {
+//     const productList = list.map((item) => {
+//         return renderProduct(item.title, item.price);
+//     });
+//     productList.forEach(elem => {
+//         document.querySelector('.products').insertAdjacentHTML("afterbegin", elem);
+//     });
+// }
+// renderProducts(products);
 
-const renderProducts = (list = []) => {
-    const productList = list.map((item) => {
-        return renderProduct(item.title, item.price);
-    });
-    // let productList = [];
+// ES6
 
-    // for (let i = 0; i < list.length; i++) {
-    //     productList.push(renderProduct(list[i].title, list[i].price));
-    // }
-    // for (const item of list) {
-    //     productList.push(renderProduct(item.title, item.price));
-    // }
+class GoodsItem {
+    constructor(title, price) {
+        this.title = title;
+        this.price = price;
+    }
+    render() {
+        return `<div class="product-item">
+        <h3>${this.title}</h3>
+        <p>${this.price}</p>
+        <button class="by-btn">Добавить в корзину</button>
+      </div>`;
+    }
+}
+class GoodsList {
+    constructor(goods) {
+        this.goods = [];
+    }
+    fetchGoods() {
+        this.goods = [
+            {id: 1, title: 'Notebook', price: 20000},
+            {id: 2, title: 'Mouse', price: 1500},
+            {id: 3, title: 'Keyboard', price: 5000},
+            {id: 4, title: 'Gamepad', price: 4500},
+        ];
+    }
+    render() {
+        let listHtml = '';
+        this.goods.forEach(good => {
+            const goodItem = new GoodsItem(good.title, good.price);
+            listHtml += goodItem.render();
+        });
+        document.querySelector('.products').insertAdjacentHTML("afterbegin", listHtml);
+    }
 
-    // document.querySelector('.products').insertAdjacentHTML("afterbegin", productList);
-    // console.log(productList);
+    // Считает стоимость всех товаров
 
-    productList.forEach(elem => {
-        document.querySelector('.products').insertAdjacentHTML("afterbegin", elem);
-    });
+    test() {
+        let totalPrice = 0;
+        this.goods.forEach(good => {
+            totalPrice += good.price;
+        })
+        console.log(totalPrice);
+    }
+}
+const list = new GoodsList();
+list.fetchGoods();
+list.render();
+list.test();
 
-    // let [test] = productList;
-    // console.log(test);
+    // Корзина покупок
+
+class Cart {
+    constructor(buyList) {
+        this.buyList = buyList.children;
+    }
+
+    countingCart() {
+        let toBePaid = '';
+            toBePaid += +this.buyList[1].innerHTML;
+        let test2 = +toBePaid;
+        console.log(test2);
+    }
+
 }
 
-renderProducts(products);
+
+let by__btn = document.querySelectorAll('.by-btn');
+by__btn.forEach(elem => {
+    elem.addEventListener('click', (event) => {
+        let test = new Cart(event.target.parentNode);
+        test.countingCart();
+    });
+});
+
+
+
+

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0 auto;
+        }
+
+        header {
+            height: 100px;
+            background: #e6e6e6;
+            color: #635087;
+            display: flex;
+            align-items: center;
+        }
+
+        main {
+            padding-top: 100px;
+            background: #f7f7f7;
+            min-height: calc(100vh - 300px);
+        }
+
+        h2,
+        H2 {
+            font-family: georgia;
+            color: #635087;
+            font-weight: 300;
+            font-size: 20px;
+            line-height: 23px;
+        }
+
+        h3,
+        H3 {
+            font-family: georgia;
+            color: #635087;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            max-width: 800px;
+            max-height: 800px;
+            border: solid 2px #222222;
+            background: #ffffff;
+            padding: 80px 20px;
+        }
+
+        .text {
+            font-family: Georgia;
+            font-weight: 300;
+            font-size: 20px;
+            line-height: 23px;
+            color: #222222;
+        }
+
+        .burgers,
+        .toppings,
+        .souce {
+            min-width: 400px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+        }
+
+            .souce {
+                
+            }
+
+        .result {
+
+        }
+
+        .burgers {
+            margin-bottom: 40px;
+        }
+
+        .total {
+            text-align: center;
+        }
+
+            .btn_add-cart {
+                margin-top: 40px;
+            }
+
+        footer {
+            background: #e6e6e6;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>Какой-то там бургер</h2>
+    </header>
+    <main>
+        <div class="menu text">
+            <div>
+                <h3>Выберите размер бургера, подходящий именно вам!</h3>
+                <div class="burgers">
+                    <input type="radio" name="burgers" value="burgerSmall" class="burgerSmall" checked data-price="50" data-calories="20">Маленький бургер<br>
+                    <input type="radio" name="burgers" value="burgerLarge" class="burgerLarge" data-price="100" data-calories="40">Большой бургер<br>
+                </div>
+            </div>
+            <div>
+                <h3>Сделайте свой уникальный бургер, с чем он будет?</h3>
+                <div class="toppings">
+                    <input type="radio" name="toppings" value="chesse" class="topping" checked data-price="10" data-calories="20">С сыром<br>
+                    <input type="radio" name="toppings" value="salad" class="topping" data-price="20" data-calories="5">С салатом<br>
+                    <input type="radio" name="toppings" value="potato" class="topping" data-price="15" data-calories="10">С картофелем<br>
+                </div>
+            </div>
+            <div>
+                <h3>Как на счет дополнительного соуса или специй?</h3>
+                <div  class="souce">
+                    <input type="checkbox" name="souce" value="paprica" class="topping" data-price="15" data-calories="0"> посыпать приправой<br>
+                    <input type="checkbox" name="souce" value="mayonnaise" class="topping" data-price="20" data-calories="5"> полить майонезом<br>
+                </div>
+            </div>
+            <div class="total">
+                <p class="result text">Итоговая стоимость: <span class="price">0</span><br>Кол-во калорий: <span class="calories">0</span></p>
+                <button class="cook">Собрать</button>
+            </div>
+        </div>
+    </main>
+    <footer>
+
+    </footer>
+    <script>
+        'use strict'
+        let createBurger = {};
+        let createTopping = {};
+        let createSouce = [];
+        // Get all need data
+        document.querySelector('.cook').addEventListener('click', () => {
+            // Create Burger
+            let selectBurger = document.querySelector('input:checked');
+            // console.log(selectBurger.getAttribute('value'), selectBurger.getAttribute('data-price'), selectBurger.getAttribute('data-calories'));
+            createBurger = new Burger(selectBurger.getAttribute('value'), +selectBurger.getAttribute('data-price'), +selectBurger.getAttribute('data-calories'));
+            console.log(createBurger);
+            // Create Topping
+            let selectTopping = document.querySelector('input[name="toppings"]:checked');
+            // console.log(selectTopping.getAttribute('value'), selectTopping.getAttribute('data-price'), selectTopping.getAttribute('data-calories'));
+            createTopping = new Food(selectTopping.getAttribute('value'), +selectTopping.getAttribute('data-price'), +selectTopping.getAttribute('data-calories'));
+            console.log(createTopping);
+            // Create Souce
+            let selectSouce = document.querySelectorAll('input[name="souce"]:checked');
+            // console.log(selectSouce.getAttribute('value'), selectSouce.getAttribute('data-price'), selectSouce.getAttribute('data-calories'));
+            selectSouce.forEach(elem => {
+                createSouce = new Food(elem.getAttribute('value'), +elem.getAttribute('data-price'), +elem.getAttribute('data-calories'));
+                console.log(createSouce);
+                });
+            Burger.prototype.sumTotal();
+            });
+        // Make Class Food
+        class Food{
+            constructor(title, price, calories) {
+                this.title = title;
+                this.price = price;
+                this.calories = calories;
+            }
+        }
+        // Make Class Burger
+        class Burger extends Food{
+            sumTotal() {
+                // Checking for NaN
+                console.log(createSouce);
+                let souceSum = createSouce.price;
+                let souseCal = createSouce.calories;
+                // if NaN let value = 0
+                if (isNaN(createSouce.price)) {
+                    souceSum = 0;
+                    souseCal = 0;
+                };
+                document.querySelector('.price').innerHTML = createBurger.price + createTopping.price + souceSum;
+                document.querySelector('.calories').innerHTML = createBurger.calories + createTopping.calories + souseCal;
+            }
+        }
+    </script>
+</body>
+
+</html>
