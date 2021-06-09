@@ -54,16 +54,52 @@ class GoodsItem {
 class GoodsList {
     constructor(container = '.products') { // передаем параметр с строкой .products 
         this.container = container;
-        this._goods = []; // data
+        this._goods = []; // данные
         this._allProducts = []; // массив экземпляров товаров на основе this.goods
 
-        this._fetchGoods(); // получаем data с сервера
-        this._render(); // создаем объект из data с сервера
-        this.sum(); // считаем стоимость всех товаров прилетевших в data
+        this._checkData();
+        this._fetchGoods(); // получаем данные с сервера
+        this._render(); // создаем объект из данные с сервера
+        this.sum(); // считаем стоимость всех товаров прилетевших в данные
         this.addToCart();
     }
     
-    // data  с сервера
+    // запросить данные с сервера
+    _checkData() {
+      // ES5 как-то так, CORS меня послал
+      // let xhr = new XMLHttpRequest();
+      // xhr.open('GET', 'data.json', true);
+      // xhr.onreadystatechange = function () {
+      //   if (xhr.readyState !== 4) return; // если статус запроса не "выполнилось"
+      //   if (xhr.status !== 200) { // если статус с кодом ошибки
+      //       console.log('ooopps...' + xhr.status + ' ' + xhr.statusText);
+      //   } else {
+      //     let data = JSON.parse(xhr.responseText);
+      //     _fetchGoods(data);
+      //   }
+      // }
+      // xhr.send();
+
+      // косячная попытка эмулировать поступление данных
+      // let dataJSON = '[{"id":1,"name":"Notebook","price":20000},{"id":2,"name":"Mouse","price":1500},{"id":3,"name":"Keyboard","price":5000},{"id":4,"name":"Gamepad","price":4500}]';
+      // let data = JSON.parse(dataJSON);
+      // console.log(data);
+      // data.forEach(elem => {
+      //   this._goods.push = elem;
+      //   console.log(elem);
+      // })
+      // return this._goods;
+
+      // ES6
+      // fetch('data.json')
+      //   .then(result => result.json())
+      //   .then(data => {
+      //     _fetchGoods(data); // не уверян что правильно, но проверить не могу
+      //   })
+      //   .catch((error) => console.log('ooopps...'));
+    }
+
+    // данные  с сервера
     _fetchGoods() {
         this._goods = [
             {id: 1, name: 'Notebook', price: 20000},
@@ -73,7 +109,7 @@ class GoodsList {
         ];
     }
 
-    // приватный метод для перебора data и создания массива с объектами этих данных
+    // приватный метод для перебора данные и создания массива с объектами этих данных
     _render() {
         const block = document.querySelector(this.container); // присваиваем block - window.'.products' div
         for(const product of this._goods) { // перебираем массив goods
@@ -86,7 +122,7 @@ class GoodsList {
 
     // Считает стоимость всех товаров
     sum() {
-        let totalPrice = 0;
+        let totalPrice = 0; 
         this._goods.forEach(good => {
             totalPrice += good.price;
         })
@@ -106,6 +142,7 @@ class GoodsList {
 }
 
 const list = new GoodsList();
+
 
 
 
