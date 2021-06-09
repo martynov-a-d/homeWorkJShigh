@@ -1,120 +1,136 @@
-// class ProductList {
-//   #goods;
-//   #allProducts;
-//   #privateProp;
-//
-//   constructor(container = '.products') {
-//     this.container = container;
-//     this.#goods = []; // data
-//     this.#allProducts = []; // массив экземпляров товаров на основе this._goods
-//
-//     this.#fetchGoods();
-//     this.#render();
-//   }
-//
-//   get prop() {
-//     return this.#privateProp;
-//   }
-//
-//   set prop(value) {
-//     if (value > 100) throw new Error('Значение больше 100');
-//     this.#privateProp = value;
-//   }
-//
-//   #fetchGoods() {
-//     this.#goods = [
-//       {id: 1, title: 'Notebook', price: 20000},
-//       {id: 2, title: 'Mouse', price: 1500},
-//       {id: 3, title: 'Keyboard', price: 5000},
-//       {id: 4, title: 'Gamepad', price: 4500},
-//     ];
-//   }
-//
-//   #render() {
-//     const block = document.querySelector(this.container);
-//
-//     for (const product of this.#goods) {
-//       // console.log(new ProductItem(product).render());
-//       const productObject = new ProductItem(product);
-//
-//       this.#allProducts.push(productObject);
-//       block.insertAdjacentHTML('beforeend', productObject.render());
-//     }
-//   }
-// }
-class ProductList {
-  constructor(container = '.products') {
-    this.container = container;
-    this._goods = []; // data
-    this._allProducts = []; // массив экземпляров товаров на основе this._goods
+'use strict'
+const main = document.querySelector('main');
+    main.classList.add("conteiner");
+const header = document.querySelector('header');
+const btn__cart = document.querySelector('.btn-cart');
 
-    this._fetchGoods();
-    this._render();
-  }
-
-  _fetchGoods() {
-    this._goods = [
-      {id: 1, title: 'Notebook', price: 20000},
-      {id: 2, title: 'Mouse', price: 1500},
-      {id: 3, title: 'Keyboard', price: 5000},
-      {id: 4, title: 'Gamepad', price: 4500},
-    ];
-  }
-
-  _render() {
-    const block = document.querySelector(this.container);
-
-    for (const product of this._goods) {
-      // console.log(new ProductItem(product).render());
-      const productObject = new ProductItem(product);
-
-      this._allProducts.push(productObject);
-      block.insertAdjacentHTML('beforeend', productObject.render());
-    }
-  }
-}
-
-class ProductItem {
-  constructor(product, img='https://via.placeholder.com/200x150') {
-    this.title = product.title;
-    this.price = product.price;
-    this.id = product.id;
-    this.img = img;
-  }
-
-  render() {
-    return `<div class="product-item" data-id="${this.id}">
-                <img src="${this.img}" alt="Some img">
-                <div class="desc">
-                    <h3>${this.title}</h3>
-                    <p>${this.price} \u20bd</p>
-                    <button class="buy-btn">Купить</button>
-                </div>
-            </div>`;
-  }
-}
-
-const catalog = new ProductList();
+// ES5
 
 // const products = [
-//   {id: 1, title: 'Notebook', price: 20000},
-//   {id: 2, title: 'Mouse', price: 1500},
-//   {id: 3, title: 'Keyboard', price: 5000},
-//   {id: 4, title: 'Gamepad', price: 4500},
+//     {id: 1, title: 'Notebook', price: 20000},
+//     {id: 2, title: 'Mouse', price: 1500},
+//     {id: 3, title: 'Keyboard', price: 5000},
+//     {id: 4, title: 'Gamepad', price: 4500},
 // ];
-//
-// const renderProduct = (item, img='https://via.placeholder.com/200x150') => `<div class="product-item" data-id="${this.id}">
-//               <img src="${img}" alt="Some img">
-//               <div class="desc">
-//                   <h3>${item.title}</h3>
-//                   <p>${item.price} \u20bd</p>
-//                   <button class="buy-btn">Купить</button>
-//               </div>
-//           </div>`;
-//
-// const renderProducts = list => {
-// document.querySelector('.products').insertAdjacentHTML('beforeend', list.map(item => renderProduct(item)).join(''));
+// const renderProduct = (title, price) => {
+//     return `<div class="product-item">
+//                 <h3>${title}</h3>
+//                 <p>${price}</p>
+//                 <button class="by-btn">Добавить в корзину</button>
+//               </div>`;
 // };
-//
+// const renderProducts = (list = []) => {
+//     const productList = list.map((item) => {
+//         return renderProduct(item.title, item.price);
+//     });
+//     productList.forEach(elem => {
+//         document.querySelector('.products').insertAdjacentHTML("afterbegin", elem);
+//     });
+// }
 // renderProducts(products);
 
+// ES6
+
+class GoodsItem {
+    constructor(elem, img='https://via.placeholder.com/200x150') {
+        this.name = elem.name;
+        this.price = elem.price;
+        this.id = elem.id;
+        this.img = img;
+    }
+    
+    render() {
+        return `<div class="product-item" data-id="${this.id}">
+        <img src="${this.img}" alt="Some img">
+        <div class="desc">
+            <h3>${this.name}</h3>
+            <p>${this.price} \u20bd</p>
+            <button class="buy-btn">Купить</button>
+        </div>
+    </div>`;
+    }
+}
+
+class GoodsList {
+    constructor(container = '.products') { // передаем параметр с строкой .products 
+        this.container = container;
+        this._goods = []; // data
+        this._allProducts = []; // массив экземпляров товаров на основе this.goods
+
+        this._fetchGoods(); // получаем data с сервера
+        this._render(); // создаем объект из data с сервера
+        this.sum(); // считаем стоимость всех товаров прилетевших в data
+        this.addToCart();
+    }
+    
+    // data  с сервера
+    _fetchGoods() {
+        this._goods = [
+            {id: 1, name: 'Notebook', price: 20000},
+            {id: 2, name: 'Mouse', price: 1500},
+            {id: 3, name: 'Keyboard', price: 5000},
+            {id: 4, name: 'Gamepad', price: 4500},
+        ];
+    }
+
+    // приватный метод для перебора data и создания массива с объектами этих данных
+    _render() {
+        const block = document.querySelector(this.container); // присваиваем block - window.'.products' div
+        for(const product of this._goods) { // перебираем массив goods
+            // console.log(new GoodsItem(product).render())
+            const goodsObject = new GoodsItem(product); // создаем объект на основе данных из массива goods
+            this._allProducts.push(goodsObject); // push добавляем элемент в конец массива allProducts
+            block.insertAdjacentHTML('beforeend', goodsObject.render()) //
+        }
+    }
+
+    // Считает стоимость всех товаров
+    sum() {
+        let totalPrice = 0;
+        this._goods.forEach(good => {
+            totalPrice += good.price;
+        })
+        console.log(totalPrice);
+    }
+
+    // Добавляем обработчик на кнопку купить
+    addToCart() {
+        let btnBuy = document.querySelectorAll('.buy-btn'); // присваиваем переменной ссылку на кнопки
+        btnBuy.forEach(elem => { // перебираем объект с кнопками
+            elem.addEventListener('click', function(event) { // добавляем слушатель события
+                console.log(event.target);
+            })
+        })
+    }
+
+}
+
+const list = new GoodsList();
+
+
+
+
+
+
+
+    // Корзина покупок
+// class Cart {
+//     constructor(buyList) {
+//         this.buyList = buyList;
+//     }
+
+//     countingCart() {
+//         let toBePaid = '';
+//             toBePaid += +this.buyList[1].innerHTML;
+//         let test2 = +toBePaid;
+//         console.log(test2);
+//     }
+// }
+
+// let by__btn = document.querySelectorAll('.buy-btn');
+// by__btn.forEach(elem => {
+//     elem.addEventListener('click', (event) => {
+//         let test = new Cart(event.target);
+//         test.countingCart();
+//     });
+// });
