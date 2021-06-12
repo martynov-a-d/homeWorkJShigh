@@ -54,15 +54,19 @@ class GoodsItem {
         <div class="desc">
             <h3>${this.name}</h3>
             <p>${this.price} \u20bd</p>
-            <button class="buy-btn">Купить</button>
+            <button class="buy-btn"
+            data-id="${this.id}" 
+            data-name="${this.name}" 
+            data-price="${this.price}">Купить</button>
         </div>
     </div>`;
     }
 }
 
 class GoodsList {
-    constructor(container = '.products') { // передаем параметр с строкой .products 
+    constructor(url = '/catalogData.json', container = '.products') { // передаем параметр с строкой .products 
         this.container = container;
+        this.url = url;
         this._goods = []; // данные
         this._allProducts = []; // массив экземпляров товаров на основе this.goods
         // this._fetchGoods(); // получаем данные с сервера
@@ -71,7 +75,7 @@ class GoodsList {
             this._goods = data;
             this._render(); // создаем объект из данные с сервера                    
             this.sum(); // считаем стоимость всех товаров прилетевших в данные
-            this.addToCart(); // добавляем слушатель события
+            this.taskBtn(); // добавляем слушатель события
           });
     }
 
@@ -84,7 +88,7 @@ class GoodsList {
     // }
 
     _getData() { 
-      return fetch(`${API}/catalogData.json`) // получаем данные с сервера
+      return fetch(`${API + this.url}`) // получаем данные с сервера
         .then(result => result.json()) // распарсиваем данные ))
         .catch(error => console.log(error)); // выдаем ошибку если ничего не принес
     }
@@ -110,12 +114,13 @@ class GoodsList {
     }
 
     // Добавляем обработчик на кнопку купить
-    addToCart() {
+    taskBtn() {
         let btnBuy = document.querySelectorAll(this.container); // присваиваем переменной ссылку на кнопки
         btnBuy.forEach(elem => { // перебираем объект с кнопками
             elem.addEventListener('click', elem => { // добавляем слушатель события
                 if (elem.target.classList.contains('buy-btn')) {
-                  console.log(elem.target);
+                  console.log(elem.target.dataset);
+                  addToCart()
                 }
             })
         })
@@ -125,22 +130,11 @@ const list = new GoodsList();
 
     // Корзина покупок
     class Cart extends GoodsList{
-        constructor(container = '.cart_block') {
-            this.buyList = buyList;
+        constructor(container = '.cart_block', url = '/addToBasket.json') {
+            super(url, container);
+            this._getData();
         }
-
-//     countingCart() {
-//         let toBePaid = '';
-//             toBePaid += +this.buyList[1].innerHTML;
-//         let test2 = +toBePaid;
-//         console.log(test2);
-//     }
-// }
-
-// let by__btn = document.querySelectorAll('.buy-btn');
-// by__btn.forEach(elem => {
-//     elem.addEventListener('click', (event) => {
-//         let test = new Cart(event.target);
-//         test.countingCart();
-//     });
-// });
+        addToCart() {
+          
+        }
+    }
