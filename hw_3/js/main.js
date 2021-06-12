@@ -65,16 +65,14 @@ class GoodsList {
         this.container = container;
         this._goods = []; // данные
         this._allProducts = []; // массив экземпляров товаров на основе this.goods
-
         // this._fetchGoods(); // получаем данные с сервера
         this._getData() // получаем данные с сервера
           .then((data) => {
             this._goods = data;
             this._render(); // создаем объект из данные с сервера                    
             this.sum(); // считаем стоимость всех товаров прилетевших в данные
+            this.addToCart(); // добавляем слушатель события
           });
-
-        this.addToCart();
     }
 
     // данные  с сервера
@@ -113,30 +111,23 @@ class GoodsList {
 
     // Добавляем обработчик на кнопку купить
     addToCart() {
-        let btnBuy = document.querySelectorAll('.buy-btn'); // присваиваем переменной ссылку на кнопки
+        let btnBuy = document.querySelectorAll(this.container); // присваиваем переменной ссылку на кнопки
         btnBuy.forEach(elem => { // перебираем объект с кнопками
-            elem.addEventListener('click', function(event) { // добавляем слушатель события
-                console.log(event.target);
+            elem.addEventListener('click', elem => { // добавляем слушатель события
+                if (elem.target.classList.contains('buy-btn')) {
+                  console.log(elem.target);
+                }
             })
         })
     }
-
 }
-
 const list = new GoodsList();
 
-
-
-
-
-
-
-
     // Корзина покупок
-// class Cart {
-//     constructor(buyList) {
-//         this.buyList = buyList;
-//     }
+    class Cart extends GoodsList{
+        constructor(container = '.cart_block') {
+            this.buyList = buyList;
+        }
 
 //     countingCart() {
 //         let toBePaid = '';
