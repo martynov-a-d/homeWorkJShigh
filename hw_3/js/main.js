@@ -55,8 +55,8 @@ class GoodsItem {
             <h3>${this.name}</h3>
             <p>${this.price} \u20bd</p>
             <button class="buy-btn"
-            data-id="${this.id}" 
-            data-name="${this.name}" 
+            data-id_product="${this.id}" 
+            data-product_name="${this.name}" 
             data-price="${this.price}">Купить</button>
         </div>
     </div>`;
@@ -115,26 +115,147 @@ class GoodsList {
 
     // Добавляем обработчик на кнопку купить
     taskBtn() {
-        let btnBuy = document.querySelectorAll(this.container); // присваиваем переменной ссылку на кнопки
-        btnBuy.forEach(elem => { // перебираем объект с кнопками
-            elem.addEventListener('click', elem => { // добавляем слушатель события
-                if (elem.target.classList.contains('buy-btn')) {
-                  console.log(elem.target.dataset);
-                  addToCart()
-                }
-            })
-        })
+        // let btnBuy = document.querySelectorAll(this.container); // присваиваем переменной ссылку на кнопки
+        // btnBuy.forEach(elem => { // перебираем объект с кнопками
+        //     elem.addEventListener('click', elem => { // добавляем слушатель события
+        //         if (elem.target.classList.contains('buy-btn')) {
+        //           console.log(elem.target.dataset);
+        let btnBuy = document.querySelector(this.container); // присваиваем переменной ссылку на кнопки
+          btnBuy.addEventListener('click', elem => {
+            if (elem.target.classList.contains('buy-btn')) {
+              console.log(elem.target.dataset);
+              const cart = new CartElem(elem.target.dataset);
+            }
+          })
+
+        //     })
+        // })
     }
 }
-const list = new GoodsList();
 
     // Корзина покупок
-    class Cart extends GoodsList{
-        constructor(container = '.cart_block', url = '/addToBasket.json') {
-            super(url, container);
-            this._getData();
+    class CartElem extends GoodsItem{
+      constructor(elem, img = 'https://via.placeholder.com/50x100'){
+        super(elem, img);
+        this.quantity = 1;
+        this.arrCartItem = [];
+        this._addToCart();
+        this._removeCart();
+      }
+      render() {
+        return `<div class="cart-item" data-id="${this.id}">
+                <div class="product-bio">
+                <img src="${this.img}" alt="Some image">
+                <div class="product-desc">
+                <p class="product-title">${this.name}</p>
+                <p class="product-quantity">Количество: ${this.quantity}</p>
+            <p class="product-single-price">${this.price} за ед.</p>
+            </div>
+            </div>
+            <div class="right-block">
+                <p class="product-price">${this.quantity*this.price} ₽</p>
+                <button class="del-btn" data-id="${this.id}">&times;</button>
+            </div>
+            </div>`
+      }
+      _addToCart() {
+        
+        let cart_block = document.querySelector('.cart-block');
+        let cart_item = document.querySelectorAll('.cart-item');
+        let cI_quantity = document.querySelectorAll('.product-quantity');
+        
+        if (cart_item.length < 1) {
+          cart_block.insertAdjacentHTML('beforeend', this.render());
+          console.log(this);
         }
-        addToCart() {
-          
-        }
-    }
+        // console.log(cart_item);
+        // this.arrCartItem.push(cart_item);
+        // let cartFind = this.arrCartItem.find(elem => elem.id === this.id) 
+        //   if(cartFind) {
+        //     this.quantity++;
+        //     console.log(this);
+        //   } else {
+        //     cart_block.insertAdjacentHTML('beforeend', this.render());
+        //     console.log(this);
+        //   }  
+        
+      
+
+        console.log(cart_item);
+        cart_item.forEach(elem => {
+          if(elem.dataset['id'] == this.id) {
+            this.cI_quantity++;
+            console.log(this);
+          } else {
+            cart_block.insertAdjacentHTML('beforeend', this.render());
+            console.log(this);
+          }  
+        })
+        
+        // if(cart_item.id === this.id) {
+        //   console.log("WTF");
+        // } else {
+        //       cart_block.insertAdjacentHTML('beforeend', this.render());
+        //       console.log(this);
+        //     }  
+
+        // while (this.arrCartItem.length < 1) {
+        //   this.arrCartItem.push(this);
+        //   cart_block.insertAdjacentHTML('beforeend', this.render());
+        //   console.log(cart_item);
+        //   console.log(this.arrCartItem);
+        // }
+        // this.arrCartItem.forEach(elem => {
+        //   if (+elem.id === +this.id) {
+        //     console.log(+this.id)
+        //     // elem.quantity = quantity++;
+        //   } else {
+        //     cart_block.insertAdjacentHTML('beforeend', this.render());
+        //     console.log(this.arrCartItem);
+        //   }  
+        // })
+
+        // if (false) {
+        //   this.quantity = quantity++;
+        // } else {
+        //   arrCartItem.push(this);
+        //   cart_block.insertAdjacentHTML('beforeend', this.render());
+        //   console.log(arrCartItem);
+        // }
+      }
+      _removeCart() {
+        let btnRemove = document.querySelector('.cart-block');
+        btnRemove.addEventListener('click', elem => {
+          if(elem.target.classList.contains('del-btn')) {
+            console.log(this);
+            // document.querySelector(this).remove();
+          };
+        });
+      }
+
+
+      // constructor(container = ".cart-block", url = "/getBasket.json"){
+      //   super(url, container);
+      // }
+      // _addToCart(elem) {
+      //   this._getData(`${API}/addToBasket.json`)
+      //     .then(data => {
+      //       console.log(data);
+      //       if(data.result === 1){
+      //         let elemId = +elem.dataset['id'];
+      //         let find = this.allProducts.find(product => product.id_product === elemId);
+      //         let product = {
+      //           id_product: productId,
+      //           price: +elem.dataset['price'],
+      //           product_name: elem.dataset['name'],
+      //           quantity: 1
+      //         }
+      //         this._goods = [product];
+      //       }
+      //     })
+      //   }
+      }
+    
+
+    const list = new GoodsList();
+    

@@ -33,6 +33,29 @@ button{
 .btn-cart, .logo{
     align-self: center;
 }
+.cart-block{
+    position: absolute;
+    top: 30px;
+    right: 80px;
+    width: 300px;
+    background-color: snow;
+    border: 1px solid gray;
+    color: black;
+    border-radius: 5px;
+    z-index: 1;
+}
+    .cart-item{
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+    }
+    .product-bio{
+        display: flex;
+        align-items: center;
+    }
+    .product-desc{
+        padding-left: 20px;
+    }
 .products{
     column-gap: 30px;
     display: grid;
@@ -74,4 +97,7 @@ img {
     background-color: transparent;
     border-color: #2f2a2d;
     color: #2f2a2d;
+}
+.invisible{
+    display: none;
 }
