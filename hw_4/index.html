@@ -51,27 +51,40 @@
         'use strict'
 
         document.querySelector('form').addEventListener('change', elem => {
+            console.log(elem.target.value);
+            let elemValue = elem.target.value;
             switch (elem.target.id) {
                 case 'name':
-                    console.log(elem.target.id);
+                    // console.log(elem.target.id);
+                    // console.log(elemValue.match(/[a-zA-Zа-яА-ЯёЁ]/g).join(''));
+                    
                     break;
                 case 'phone':
-                    console.log(elem.target.id); // \D
+                    // console.log(elem.target.id); // \D
+                    // console.log(elemValue.replace(/\D/g, ''));
                     break;
                 case 'email':
-                    console.log(elem.target.id); // \w
+                    // console.log(elem.target.id); // \w
+                    // console.log(elemValue.match(/^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})/))
                     break;
                 case 'comment':
-                    console.log(elem.target.id);
+                    // console.log(elem.target.id);
                     break;
             }
         });
 
         document.querySelector('.btn_sub').addEventListener('click', () => {
-            // let objForm = new User();
+            let objForm = new User(userName, userPhone, userEmail, userComment);
         });
 
-        // class User(){}
+        class User{
+            constructor(name, phone, email, comment) {
+                this.name = name;
+                this.phone = phone;
+                this.email = email;
+                this.comment = comment;
+            }
+        }
         
     </script>
 </body>
