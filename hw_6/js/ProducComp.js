@@ -8,8 +8,8 @@ Vue.component('products', {
         }
     },
     methods: {
-        filter(){
-            let regexp = new RegExp(this.userSearch, 'i');
+        filter(test){
+            let regexp = new RegExp(test, 'i');
             this.filtered = this.products.filter(el => regexp.test(el.product_name));
         }
     },
