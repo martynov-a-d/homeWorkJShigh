@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .text_elems{
+            display: flex;
+            flex-direction: column;
+        }
+        .main {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 50px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            padding: 40px;
+            align-items: center;
+            border: 1px solid transparent;
+        }
+            input {
+                margin-bottom: 20px;
+            }
+            .btn_sub {
+                max-width: 150px;
+            }
+        .attention{
+            border-color: red;
+            background-color: salmon;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="main">
+        <div class="text_elems">
+            <span>One: 'Hi Mary.' Two: 'Oh, hi.'</span>
+            <span>One: 'How are you doing?'</span>
+            <span>Two: 'I'm doing alright. How about you?'</span>
+            <span>One: 'Not too bad. The weather is great isn't it?'</span>
+            <span>Two: 'Yes. It's absolutely beautiful today.'</span>
+            <span>One: 'I wish it was like this more frequently.'</span>
+            <span>Two: 'Me too.'</span>
+            <span>One: 'So where are you going now?'</span>
+            <span>Two: 'I'm going to meet a friend of mine at the department store'</span>
+            <span>One: 'Going to do a little shopping?'</span>
+            <span>Two: 'Yeah, I have to buy some presents for my parents.'</span>
+            <span>One: 'What's the occasion?'</span>
+            <span>Two: 'It's their anniversary.'</span>
+            <span>One: 'That's great. Well, you better get going. You don't want to be late.'</span>
+            <span>Two: 'I'll see you next time.'</span>
+            <span>One: 'Sure.' Bye.'</span>
+        </div>
+        <form>
+            <input type="text" name="Имя" id="name" placeholder="Пупкин Вася">
+            <input type="text" name="Телефон" id="phone" placeholder="+7(000)000-0000">
+            <input type="email" name="E-mail" id="email" placeholder="mymail@mail.ru">
+            <input type="text" name="Комментарий" id="comment" placeholder="что-то с чем-то">
+            <input class="btn_sub" type="button" value="Отправить">
+        </form>
+    </div>
+
+    <script>
+        'use strict'
+
+        let test = document.querySelectorAll('span');
+        test.forEach(elem => {
+            console.log(elem.textContent.replace(/\B[']|[']\B/g, "\""));
+        })
+
+        class ValidForm{
+            constructor() {
+                this.name = name;
+                this.phone = phone;
+                this.email = email;
+                this.comment = comment;
+                this._validForm();
+                this._makeUser();
+            }
+            _validForm() {
+                document.querySelector('form').addEventListener('change', elem => {
+                    let elemValue = elem.target.value;
+                    switch (elem.target.id) {
+                        case 'name':
+                            return this.name = elemValue.match(/[a-zA-Zа-яА-ЯёЁ]/g).join('');
+                        case 'phone':
+                            return this.phone = elemValue.replace(/\D{11}/g, '');
+                        case 'email':
+                            return this.email = elemValue.match(/^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})/g).join('');
+                        case 'comment':
+                            return this.comment.value;
+                    }
+                });
+            }
+            _makeUser() {
+                document.querySelector('.btn_sub').addEventListener('click', () => {
+                    console.log(data.name, data.phone, data.email);
+                });
+            }
+        }
+
+        let data = new ValidForm();
+        
+    </script>
+</body>
+</html>
